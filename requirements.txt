@@ -1,4 +1,6 @@
 #requirements.txt
+snowflake-connector-python
+python-dotenv
+cryptography
+streamlit
 snowflake-snowpark-python
-stearmlit
-
