@@ -31,15 +31,21 @@ ingredients_list = st.multiselect(
 )
 
 if ingredients_list:
-    ingredients_string = ' '.join(ingredients_list)  # Join selected ingredients
 
-    # SQL insert statement
-    my_insert_stmt = f"""
-        INSERT INTO smoothies.public.orders (ingredients, name) 
-        VALUES ('{ingredients_string}', '{name_on_order}')
-    """
+    ingredients_string = ''
 
-    # Button to submit the order
-    if st.button('Submit Order'):
-        session.sql(my_insert_stmt).collect()  # Execute SQL
-        st.success('Your Smoothie is ordered!', icon="✅")
+    for fruit_chosen in ingredients_list:
+
+        ingredients_string += fruit_chosen +' '
+
+        #st.write(ingredients_string)
+
+    my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
+
+                values ('"""+ ingredients_string + """','""" + name_on_order + """')"""
+ 
+ 
+    time_to_insert = st.button('Submit Order')
+ 
+
+ 
