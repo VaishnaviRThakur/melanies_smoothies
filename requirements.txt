@@ -3,5 +3,6 @@ snowflake-connector-python
 python-dotenv
 cryptography
 streamlit
-requests
 snowflake-snowpark-python
+requests
+pandas
