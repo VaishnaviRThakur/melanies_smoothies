@@ -35,32 +35,3 @@ ingredients_string = ""
 
 if ingredients_list:
     for fruit_chosen in ingredients_list:
-        search_on = pd_df.loc[pd_df["FRUIT_NAME"] == fruit_chosen, "SEARCH_ON"].iloc[0]
-        st.subheader(f"{fruit_chosen} Nutrition Information")
-
-        # API call to fetch nutrition details
-        try:
-            response = requests.get(f"https://my.smoothiefroot.com/api/fruit/{search_on}")
-            if response.status_code == 200:
-                st.dataframe(data=response.json(), use_container_width=True)
-            else:
-                st.warning(f"⚠️ Unable to fetch nutrition details for {fruit_chosen}.")
-        except Exception as e:
-            st.error(f"❌ API request failed: {e}")
-
-        # Constructing the ingredient string
-        ingredients_string += fruit_chosen + ", "
-
-# Trim the last comma and space
-ingredients_string = ingredients_string.strip(", ")
-
-# Only insert if ingredients and name are provided
-if ingredients_string and name_on_order:
-    my_insert_stmt = "INSERT INTO smoothies.public.orders (ingredients, name_on_order) VALUES (?, ?)"
-
-    time_to_insert = st.button("Submit Order")
-
-    if time_to_insert:
-        session.sql(my_insert_stmt, [ingredients_string, name_on_order]).collect()
-        st.success("✅ Your Smoothie is ordered!", icon="✅")
-
